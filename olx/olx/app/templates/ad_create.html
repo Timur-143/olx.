@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+{% load static %}
+{% load form_tags %}
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Новое объявление</title>
+  <style>
+    .form-container {
+      background: #fff;
+      border-radius: 8px;
+      padding: 30px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+    .form-control, .form-select {
+      height: 50px;
+      font-size: 16px;
+    }
+    textarea.form-control {
+      height: 150px;
+    }
+    label {
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+{% block title %}Новое объявление{% endblock %}
+
+{% block content %}
+<div class="container mt-5 mb-5" style="max-width: 900px;">
+  <div class="form-container">
+    <h2 class="mb-4">Разместить объявление</h2>
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ form.non_field_errors }}
+
+      <!-- Название -->
+      <div class="mb-4">
+        <label for="{{ form.title.id_for_label }}">Название</label>
+        {{ form.title|add_class:"form-control" }}
+        {{ form.title.errors }}
+      </div>
+
+      <!-- Категория -->
+      <div class="mb-4">
+        <label for="{{ form.category.id_for_label }}">Категория</label>
+        {{ form.category|add_class:"form-select" }}
+        {{ form.category.errors }}
+      </div>
+
+      <!-- Фото -->
+      <div class="mb-4">
+        <label for="{{ form.image.id_for_label }}">Фото</label>
+        {{ form.image|add_class:"form-control" }}
+        {{ form.image.errors }}
+      </div>
+
+      <!-- Цена -->
+      <div class="mb-4">
+        <label for="{{ form.price.id_for_label }}">Цена</label>
+        {{ form.price|add_class:"form-control" }}
+        {{ form.price.errors }}
+      </div>
+
+      <!-- Местоположение -->
+      <div class="mb-4">
+        <label for="{{ form.location.id_for_label }}">Местоположение</label>
+        {{ form.location|add_class:"form-control" }}
+        {{ form.location.errors }}
+      </div>
+
+      <!-- Описание -->
+      <div class="mb-4">
+        <label for="{{ form.description.id_for_label }}">Описание</label>
+        {{ form.description|add_class:"form-control" }}
+        {{ form.description.errors }}
+      </div>
+
+      <!-- Кнопка -->
+      <button type="submit" class="btn btn-dark w-100">Опубликовать</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+</body>
+</html>

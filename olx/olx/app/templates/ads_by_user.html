@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% extends 'base.html' %}
+{% block title %}Объявления от {{ author.username }}{% endblock %}
+
+{% block content %}
+<div class="bg-light py-4">
+  <h2 class="text-center">Объявления</h2>
+  <div class="container">
+    <div class="row">
+      {% for ad in ads %}
+        <div class="col-md-4 mb-4 d-flex">
+          <a href="{% url 'ad_detail' ad.pk %}" class="text-decoration-none text-dark w-100">
+            <div class="card h-100 shadow-sm">
+              {% if ad.image %}
+                <img src="{{ ad.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+              {% endif %}
+              <div class="card-body">
+                <h6 class="card-title text-truncate">
+                  {{ ad.title }}
+                </h6>
+                <p class="fw-bold mb-1">{{ ad.price }} ₸</p>
+                <p class="text-muted mb-0" style="font-size: 14px;">
+                  {{ ad.location }} • {{ ad.created_at|date:"d.m.Y" }}
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% empty %}
+        <p>У этого пользователя пока нет объявлений.</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
+
+</body>
+</html>

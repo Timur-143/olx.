@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+{% block content %}
+  <h2 class="text-center mt-4">Объявления</h2>
+
+  <form method="get" class="d-flex mb-4" style="width: 75%; margin: auto;">
+    <input class="form-control me-2" type="search" name="q" placeholder="Что ищите?" value="{{ request.GET.q }}">
+    <button class="btn btn-outline-dark" type="submit">Поиск</button>
+  </form>
+
+  <div class="container">
+    <div class="row">
+      {% for ad in ads %}
+          <div class="col-md-4 mb-4 d-flex">
+          <a href="{% url 'ad_detail' ad.pk %}" class="text-decoration-none text-dark w-100">
+            <div class="card h-100 shadow-sm">
+              {% if ad.image %}
+                <img src="{{ ad.image.url }}" class="card-img-top" style="height: 200px; object-fit: cover;">
+              {% endif %}
+              <div class="card-body">
+                <h6 class="card-title text-truncate">
+                  {{ ad.title }}
+                </h6>
+                <p class="fw-bold mb-1">{{ ad.price }} ₸</p>
+                <p class="text-muted mb-0" style="font-size: 14px;">
+                  {{ ad.location }} • {{ ad.created_at|date:"d.m.Y" }}
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      {% empty %}
+        <p class="text-center">Ничего не найдено.</p>
+      {% endfor %}
+    </div>
+  </div>
+{% endblock %}
+
+</body>
+</html>
